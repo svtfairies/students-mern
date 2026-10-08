@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
 
-const API_URL = "https://localhost:5000";
-
 function App() {
   const [students, setStudents] = useState([]);
   const [name, setName] = useState("");
@@ -13,7 +11,7 @@ function App() {
  
   const fetchStudents = async () => {
     try {
-      const response = await axios.get(`${API_URL}/students`);
+      const response = await axios.get(`https://localhost:5000/students`);
       setStudents(response.data);
     } catch (error) {
       console.error("Failed to fetch students:", error);
@@ -28,7 +26,7 @@ function App() {
     event.preventDefault();
  
     try {
-      await axios.post(`${API_URL}/students`, {
+      await axios.post(`https://localhost:5000/students`, {
         name,
         course,
         age: Number(age),
@@ -46,7 +44,7 @@ function App() {
  
   const handleDeleteStudent = async (id) => {
     try {
-      await axios.delete(`${API_URL}/students/${id}`);
+      await axios.delete(`https://localhost:5000/students/${id}`);
       fetchStudents();
     } catch (error) {
       console.error("Failed to delete student:", error);
@@ -64,7 +62,7 @@ function App() {
     event.preventDefault();
  
     try {
-      await axios.put(`${API_URL}/students/${editingId}`, {
+      await axios.put(`https://localhost:5000/students/${editingId}`, {
         name,
         course,
         age: Number(age),
@@ -91,7 +89,7 @@ function App() {
         <h2>{editingId ? "Edit Student" : "Add Student"}</h2>
  
         <label htmlFor="name">Name: </label>
-        <input type="text" id="name" value={name} onChange={(event) => setName(event.target.value)}required />
+        <input type="text" id="name" value={name} onChange={(event) => setName(event.target.value)} required />
         <br />
  
         <label htmlFor="course">Course: </label>
@@ -108,7 +106,7 @@ function App() {
       <section>
         <br />
         <hr />
-        <h2>Student List</h2>
+        <h2>Students</h2>
  
         {students.length === 0 ? (
           <p>No students yet.</p>
